@@ -23,20 +23,23 @@ function getUserinfo() {
             var data = res.data;
             renderAvatar(data);
         },
-        
+
     })
 }
 // 渲染头像
 function renderAvatar(data) {
+    // 如果有昵称，先欢迎昵称，否则欢迎username
+    var name = data.nickname || data.username;
     // 如果有头像图片，优先展示图片头像
     if (data.user_pic != null) {
-        $('.layui-nav-img').src = data.user_pic;
+        console.log(data.user_pic);
+        $('.layui-nav-img').attr('src', data.user_pic)
         $('.layui-nav-img').show()
         $('.text-avatar').hide()
     } else {
         // 如果有文字，展示首字母大写,或中文首字符
         $('.layui-nav-img').hide();
-        $('.text-avatar').html(data.username[0].toUpperCase() || data.username[0]); // 展示首字母
-        $('#welcome').html('你好!&nbsp;&nbsp;' + data.username)
+        $('.text-avatar').html(name[0].toUpperCase() || name[0]); // 展示首字母
     }
+    $('#welcome').html('你好!&nbsp;&nbsp;' + name)
 }  
